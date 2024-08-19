@@ -4,7 +4,7 @@
 This is a program that uses Javascript (Node.js) to update a Notion table with messages sent to and recieved from various users. This application supports sending messages to a designated Recipient as a specified Sender, reading messages for a given Recipient, and deleting messages for a given recipient. A user can read all of their messages or read all of their messages sent from a particular user. A user can delete all of their messages or specify a particular messsage to delete. These actions all use the Notion API to read and write from the database. Timestamps are also included in the database to indicate when messages were sent. The additional functionality that I added beyond the suggested improvements was making a more flexible system of reading and deleting messages such that a user has more control over which messages they read and delete. 
 
 ## How to install and run
-To run the program type "node server.js" into the terminal/ command line. A message prompting the user to select from a list of options will pop up. For each interaction with the database repeat these steps.
+To run the program type "node server.js" into the terminal/ command line. A message prompting the user to select from a list of options will pop up. For each interaction with the database repeat these steps. Make sure to change your secret key in the env file.
 
 ## References used:
 - https://developers.notion.com/docs/working-with-databases#filtering-database-pages
