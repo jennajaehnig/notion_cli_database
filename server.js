@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: process.env.NOTION_KEY });
 
-console.log(process.env);
+// console.log(process.env);
 
 const prompt = require("prompt-sync")();
 
@@ -10,6 +10,7 @@ const intro_msg =
   "Welcome to NotionMail!\n - send: Send mail to a user.\n - read all: Check all messages.\n - read from: Check messages from a particular sender.\n - delete: Delete messages.";
 
 async function appendMsg(sender, recipient, msg) {
+  console.log("here");
   const response = await notion.pages.create({
     parent: {
       type: "database_id",
@@ -170,6 +171,6 @@ async function main() {
   }
 }
 
-main();
+// main();
 
-(module.exports = deleteMsgs), readMsgs, getMsgs, getAllMsgs, appendMsg;
+module.exports = { appendMsg };

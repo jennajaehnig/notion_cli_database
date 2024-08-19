@@ -3,6 +3,7 @@ const path = require("path");
 const process = require("process");
 const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
+const {appendMsg} = require("./server.js");
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"];
@@ -99,12 +100,12 @@ async function getEmails(auth) {
     maxResults: 10,
   });
   const msgs = res.data.messages;
-  console.log(msgs);
+  // console.log(msgs);
   if (!msgs || msgs.length === 0) {
     console.log("No messages found.");
     return;
   }
-  console.log("Messages:");
+  // console.log("Messages:");
   for (const message of msgs) {
     const msg = await gmail.users.messages.get({
       userId: "me",
@@ -115,18 +116,19 @@ async function getEmails(auth) {
     });
     msg_preview = msg.data["snippet"];
     headers = msg.data.payload["headers"];
-    for (header of headers){
-      var subject;
-      var sender;
-      var recipient;
-      if(header.name == "From"){
+    for (header of headers) {
+      var subject = "";
+      var sender = "";
+      var recipient = "";
+      if (header.name == "From") {
         sender = header.value;
-      } else if(header.name == "To"){
+      } else if (header.name == "To") {
         recipient = header.value;
-      } else if(header.name == "Subject"){
+      } else if (header.name == "Subject") {
         subject = header.value;
       }
     }
+    appendMsg(sender, recipient, msg_preview);
     console.log("subject: ", subject);
     console.log("from: ", sender);
     console.log("to: ", recipient);
@@ -134,5 +136,7 @@ async function getEmails(auth) {
   }
 }
 
-
 authorize().then(getEmails).catch(console.error);
+
+// const auth = authorize();
+// getEmails(auth);
